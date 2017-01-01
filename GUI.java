@@ -64,6 +64,7 @@ public class GUI extends JFrame {
 		browse.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
+				
 				JFileChooser file = new JFileChooser();
 				file.setCurrentDirectory(new File(System.getProperty("user.home")));
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images","jpg","gif","png");
@@ -90,6 +91,7 @@ public class GUI extends JFrame {
 		Image newImage=img.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
 		ImageIcon image = new ImageIcon(newImage);
 		return image;
+		level=2;
 	}
 	
 	public void addPointComponents(){
