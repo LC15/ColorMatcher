@@ -2,6 +2,8 @@ package game;
 
 import java.awt.image.BufferedImage;
 
+
+
 public class RGB {
 	
 	private int red;
@@ -17,24 +19,36 @@ public class RGB {
 	}
 	
 	/** Finds red, green, and blue color values at a specific pixel */
-	public void Colors(BufferedImage im, int x, int y){
+	public RGB Colors(BufferedImage im, int x, int y){
 		int color = im.getRGB(x,y);
-		red=  (color & 0x00ff0000) >> 16;
-		green = (color & 0x0000ff00) >> 8;
-		blue =  color & 0x000000ff;
-		
+		int r=  (color & 0x00ff0000) >> 16;
+		int g = (color & 0x0000ff00) >> 8;
+		int b=  color & 0x000000ff;
+		RGB a = new RGB(r,g,b);
+		return a;
 	}
 	
 	/**Calculates average red, green, and blue values */
-	public RGB averge(RGB first, RGB second, RGB third){
+	public static  RGB average(RGB first, RGB second, RGB third){
 		
-		red=(first.red + second.red + third.red)/3;
-		green=(first.green + second.green + third.green)/3;
-		blue=(first.blue + second.blue + third.blue)/3;
-		RGB r=RGB(red,green,blue);
-		return r;
+		int r=(first.red + second.red + third.red)/3;
+		int g=(first.green + second.green + third.green)/3;
+		int b=(first.blue + second.blue + third.blue)/3;
+		RGB a=new RGB(r,g,b);
+		return a;
 	}
+	public static void main(String[] args){
+		RGB rgb1= new RGB(1,2,3);
+		RGB rgb2= new RGB(3,2,1);
+		RGB rgb3= new RGB(2,2,3);
+		RGB a = average(rgb1, rgb2,rgb3);
+		System.out.println(a.red);
+		
+	}
+
 }
+
+
 
 
 

@@ -14,17 +14,28 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import game.RGB;
+
 
 /** Frame for the ColorMatcher game. */
 public class GUI extends JFrame {
 	
 	//Box mainBox = new Box(BoxLayout.X_AXIS);
 	//Box imageBox = new Box(BoxLayout.Y_AXIS);
+	private BufferedImage chosenb;
+	private ImageIcon chosenimage;
+	private int level;
+	private int count;	
+	//private int level=1;//to keep track of what screen we're on
+	//private int count=0; //to keep track of #ofclicks when user specifies the points
+	private JButton browse;
+	private JLabel label;
+	private RGB one;
+	private RGB two;
+	private RGB three; 
+	private RGB avgRGB;
 	
-	int level=1;//to keep track of what screen we're on
-	int count=0; //to keep track of #ofclicks when user specifies the points
-	JButton browse;
-	JLabel label;
+	
 	//JButton startbutton;
 	
 	//browse.addActionListener(this);
@@ -41,7 +52,7 @@ public class GUI extends JFrame {
 			
 		}
 		
-		}
+		
 		
 		//getContentPane().add(mainBox, BorderLayout.WEST);
 		//getContentPane().add(imageBox, BorderLayout.EAST);
@@ -64,9 +75,9 @@ public class GUI extends JFrame {
 		//add(imageBox);
 		//add(mainBox);
 		
-		//allows user to choose an image once browse button is clicked
+		
 		browse.addActionListener(new ActionListener() {
-			
+			/** allows user to choose an image once browse button is clicked */
 			public void actionPerformed(ActionEvent e) {
 				
 				JFileChooser file = new JFileChooser();
@@ -97,43 +108,44 @@ public class GUI extends JFrame {
 	 * @throws IOException */
 	public ImageIcon showImage (String imagepath) throws IOException{
 		File file = new File(imagepath);
-		BufferedImage bufferedImage = ImageIO.read(file);
-		ImageIcon image = new ImageIcon(bufferedImage);
-		return image;
+		BufferedImage chosenb = ImageIO.read(file);
+		chosenimage = new ImageIcon(chosenb);
+		return chosenimage;
 
 	} 
 	
 
-		level=2;
-	}
+	//	level=2;
+	//}
 	
 	
 	public void addPointComponents(){
-	JTextField jt=new JTextField;
-	jt("With your mouse click on 3 points in the image "
+	JTextField jt=new JTextField("With your mouse click on 3 points in the image "
 			+ "that fall in the area with the color you want identify");
 	add(jt);
 	
+	
 	}
+
 	public void update(MouseEvent e){
 		if(level==2 && count<=3){
 			count++;
 			if (count==1){
 				int x=e.getX();
 				int y=e.getY();
-				RGB rone=RGB.Colors(image, x,y);
+				one=RGB.Colors(chosenb, 1,1);
 			}
 			else if(count==2){
 				int x=e.getX();
 				int y=e.getY();
-				RGB rtwo=RGB.Colors(image, x,y);
+				two=RGB.Colors(chosenb, x, y);
 			}
 			else if(count==3){
 				int x=e.getX();
 				int y=e.getY();
-				RGB rthree=RGB.Colors(image, x,y);
+				three=RGB.Colors(chosenb, x, y);
 			}
-			RGB ravg= RGB.average(rone,rtwo,rthree);
+			avgRGB= RGB.average(one,two,three);
 		}
 	}
 	 
@@ -147,3 +159,4 @@ public class GUI extends JFrame {
 
 }
 	 
+
