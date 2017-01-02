@@ -5,8 +5,11 @@ import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -67,7 +70,12 @@ public class GUI extends JFrame {
 				if (result ==JFileChooser.APPROVE_OPTION){
 					File selectedFile = file.getSelectedFile();
 					String path = selectedFile.getAbsolutePath();
-					label.setIcon(showImage(path));
+					try {
+						label.setIcon(showImage(path));
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				} else if (result==JFileChooser.CANCEL_OPTION){
 					System.out.println("No File Selected");
 				}
@@ -78,17 +86,15 @@ public class GUI extends JFrame {
 		
 	}
 	
-	/**Show the chosen image */
-	public ImageIcon showImage (String imagepath){
-		ImageIcon imicon = new ImageIcon(imagepath);
-		Image img = imicon.getImage();
-		Image newImage=img.getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
-		ImageIcon image = new ImageIcon(newImage);
+	/**Show the chosen image as a BufferedImage
+	 * @throws IOException */
+	public ImageIcon showImage (String imagepath) throws IOException{
+		File file = new File(imagepath);
+		BufferedImage bufferedImage = ImageIO.read(file);
+		ImageIcon image = new ImageIcon(bufferedImage);
 		return image;
 	} 
-	 	
-		
-
+	
 
 	/** Show the GUI  */
 	public static void main(String[] pars) {
