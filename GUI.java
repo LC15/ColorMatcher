@@ -20,7 +20,7 @@ public class GUI extends JFrame {
 	//Box mainBox = new Box(BoxLayout.X_AXIS);
 	//Box imageBox = new Box(BoxLayout.Y_AXIS);
 	
-	
+	int level=1;
 	
 	JButton browse;
 	JLabel label;
@@ -32,8 +32,15 @@ public class GUI extends JFrame {
 	/** Constructor */
 	public GUI() {
 		super("ColorMatcher Game");
-	
-		addComponents();
+		if(level==1){
+			addHomeSComponents();
+		}
+		else if(level==2){
+			addPointComponents();
+			
+		}
+		
+		}
 		
 		//getContentPane().add(mainBox, BorderLayout.WEST);
 		//getContentPane().add(imageBox, BorderLayout.EAST);
@@ -43,9 +50,7 @@ public class GUI extends JFrame {
 	}
 
 	/** Add components of the GUI to mainBox */
-	private void addComponents(){
-		//startbutton = new JButton("Start Game");
-
+	private void addHomeSComponents(){
 		
 		browse = new JButton("Browse an Image");
 		browse.setBounds(250,300,200,50);
@@ -62,6 +67,7 @@ public class GUI extends JFrame {
 		browse.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
+				
 				JFileChooser file = new JFileChooser();
 				file.setCurrentDirectory(new File(System.getProperty("user.home")));
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images","jpg","gif","png");
@@ -93,9 +99,23 @@ public class GUI extends JFrame {
 		BufferedImage bufferedImage = ImageIO.read(file);
 		ImageIcon image = new ImageIcon(bufferedImage);
 		return image;
+<<<<<<< HEAD
 	} 
 	
 
+=======
+		level=2;
+	}
+	
+	public void addPointComponents(){
+	JTextField jt=new JTextField;
+	jt("With your mouse click on 3 points in the image "
+			+ "that fall in the area with the color you want identify");
+	add(jt);
+	}
+		
+	 
+>>>>>>> 09743990b012ba95d43b82ecff093816ca3435cf
 	/** Show the GUI  */
 	public static void main(String[] pars) {
 		GUI gui = new GUI();
