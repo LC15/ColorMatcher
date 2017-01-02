@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -20,8 +21,8 @@ public class GUI extends JFrame {
 	//Box mainBox = new Box(BoxLayout.X_AXIS);
 	//Box imageBox = new Box(BoxLayout.Y_AXIS);
 	
-	int level=1;
-	
+	int level=1;//to keep track of what screen we're on
+	int count=0; //to keep track of #ofclicks when user specifies the points
 	JButton browse;
 	JLabel label;
 	//JButton startbutton;
@@ -99,23 +100,44 @@ public class GUI extends JFrame {
 		BufferedImage bufferedImage = ImageIO.read(file);
 		ImageIcon image = new ImageIcon(bufferedImage);
 		return image;
-<<<<<<< HEAD
+
 	} 
 	
 
-=======
 		level=2;
 	}
+	
 	
 	public void addPointComponents(){
 	JTextField jt=new JTextField;
 	jt("With your mouse click on 3 points in the image "
 			+ "that fall in the area with the color you want identify");
 	add(jt);
+	
 	}
-		
+	public void update(MouseEvent e){
+		if(level==2 && count<=3){
+			count++;
+			if (count==1){
+				int x=e.getX();
+				int y=e.getY();
+				RGB rone=RGB.Colors(image, x,y);
+			}
+			else if(count==2){
+				int x=e.getX();
+				int y=e.getY();
+				RGB rtwo=RGB.Colors(image, x,y);
+			}
+			else if(count==3){
+				int x=e.getX();
+				int y=e.getY();
+				RGB rthree=RGB.Colors(image, x,y);
+			}
+			RGB ravg= RGB.average(rone,rtwo,rthree);
+		}
+	}
 	 
->>>>>>> 09743990b012ba95d43b82ecff093816ca3435cf
+
 	/** Show the GUI  */
 	public static void main(String[] pars) {
 		GUI gui = new GUI();

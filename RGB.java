@@ -26,11 +26,13 @@ public class RGB {
 	}
 	
 	/**Calculates average red, green, and blue values */
-	public void averge(RGB first, RGB second, RGB third){
+	public RGB averge(RGB first, RGB second, RGB third){
+		
 		red=(first.red + second.red + third.red)/3;
 		green=(first.green + second.green + third.green)/3;
 		blue=(first.blue + second.blue + third.blue)/3;
-		
+		RGB r=RGB(red,green,blue);
+		return r;
 	}
 }
 
