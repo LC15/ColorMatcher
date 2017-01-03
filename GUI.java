@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -24,57 +25,45 @@ public class GUI extends JFrame {
 	//Box imageBox = new Box(BoxLayout.Y_AXIS);
 	private BufferedImage chosenb;
 	private ImageIcon chosenimage;
-	private int level;
-	private int count;	
+	//int level=1;
+	private int count=1;	
 	//private int level=1;//to keep track of what screen we're on
 	//private int count=0; //to keep track of #ofclicks when user specifies the points
 	private JButton browse;
 	private JLabel label;
+	private JLabel message;
 	private RGB one;
 	private RGB two;
 	private RGB three; 
 	private RGB avgRGB;
-	
-	
-	//JButton startbutton;
-	
-	//browse.addActionListener(this);
+
 	
 
 	/** Constructor */
 	public GUI() {
 		super("ColorMatcher Game");
-		if(level==1){
-			addHomeSComponents();
-		}
-		else if(level==2){
-			addPointComponents();
-			
-		}
-		
-		
-		
-		//getContentPane().add(mainBox, BorderLayout.WEST);
-		//getContentPane().add(imageBox, BorderLayout.EAST);
+		addHomeSComponents();
 		setSize(700,400);
 		setVisible(true);
 		
 	}
-
+	
+	
 	/** Add components of the GUI to mainBox */
 	private void addHomeSComponents(){
 		
 		browse = new JButton("Browse an Image");
 		browse.setBounds(250,300,200,50);
+		message=new JLabel();
+		message.setText("You're on click number " + count );
+		message.setBounds(275,335,200,50);
 		label=new JLabel();
-		label.setSize(200,200);
+		MouseHandler handler = new MouseHandler();
+		label.addMouseListener(handler);
+		//label.setSize(400,400);
+		add(message);
 		add(browse);
 		add(label);
-		//imageBox.add(label);
-		//mainBox.add(browse);
-		//add(imageBox);
-		//add(mainBox);
-		
 		
 		browse.addActionListener(new ActionListener() {
 			/** allows user to choose an image once browse button is clicked */
@@ -101,7 +90,6 @@ public class GUI extends JFrame {
 			}
 		});
 	
-		
 	}
 	
 	/**Show the chosen image as a BufferedImage
@@ -109,54 +97,78 @@ public class GUI extends JFrame {
 	public ImageIcon showImage (String imagepath) throws IOException{
 		File file = new File(imagepath);
 		BufferedImage chosenb = ImageIO.read(file);
+		
 		chosenimage = new ImageIcon(chosenb);
 		return chosenimage;
-
 	} 
 	
+	/** When the image is clicked, count increases, and an RGB is assigned to each pixel clicked*/
+	private class MouseHandler implements MouseListener{
 
-	//	level=2;
-	//}
-	
-	
-	public void addPointComponents(){
-	JTextField jt=new JTextField("With your mouse click on 3 points in the image "
-			+ "that fall in the area with the color you want identify");
-	add(jt);
-	
-	
-	}
-
-	public void update(MouseEvent e){
-		if(level==2 && count<=3){
-			count++;
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
 			if (count==1){
 				int x=e.getX();
 				int y=e.getY();
-				one=RGB.Colors(chosenb, 1,1);
+				one=RGB.Colors(chosenb, x,y);
+				count++;
 			}
-			else if(count==2){
+			
+			else if (count ==2){
 				int x=e.getX();
 				int y=e.getY();
-				two=RGB.Colors(chosenb, x, y);
+				two=RGB.Colors(chosenb, x,y);
+				count++;
 			}
-			else if(count==3){
+			else if (count==3){
 				int x=e.getX();
 				int y=e.getY();
-				three=RGB.Colors(chosenb, x, y);
+				three=RGB.Colors(chosenb, x,y);
+				JOptionPane.showMessageDialog(message, "The average color of your three clicks is: " + avgRGB);
 			}
-			avgRGB= RGB.average(one,two,three);
+			
 		}
-	}
-	 
 
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+
+	
+	//public void addPointComponents(){
+	//JTextField jt=new JTextField("With your mouse click on 3 points in the image "
+		//	+ "that fall in the area with the color you want identify");
+	//add(jt);
+	//}
+	
+	
 	/** Show the GUI  */
 	public static void main(String[] pars) {
 		GUI gui = new GUI();
 	}
-
-	
-
 }
 	 
 
