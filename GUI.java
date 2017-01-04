@@ -71,7 +71,6 @@ public class GUI extends JFrame {
 					int col = chosenb.getRGB(x, y);
 					Color c = new Color(col,true);
 					one=new RGB(c);
-					//one=RGB.Colors(chosenb, e.getX(),e.getY());
 					count++;
 					message.setText("You're on click number " + count );
 				}
@@ -106,7 +105,6 @@ public class GUI extends JFrame {
 		browse.addActionListener(new ActionListener() {
 			/** allows user to choose an image once browse button is clicked */
 			public void actionPerformed(ActionEvent e) {
-				
 				JFileChooser file = new JFileChooser();
 				file.setCurrentDirectory(new File(System.getProperty("user.home")));
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images","jpg","gif","png");
@@ -123,8 +121,7 @@ public class GUI extends JFrame {
 					}
 				} else if (result==JFileChooser.CANCEL_OPTION){
 					System.out.println("No File Selected");
-				}
-					
+				}	
 			}
 		});
 		
@@ -139,7 +136,6 @@ public class GUI extends JFrame {
 	public ImageIcon showImage (String imagepath) throws IOException{
 		File file = new File(imagepath);
 		chosenb = ImageIO.read(file);
-		
 		chosenimage = new ImageIcon(chosenb);
 		return chosenimage;
 	} 
