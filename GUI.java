@@ -2,9 +2,12 @@ package gui;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
@@ -13,6 +16,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import game.RGB;
@@ -20,16 +24,13 @@ import game.RGB;
 
 /** Frame for the ColorMatcher game. */
 public class GUI extends JFrame {
-	
-	//Box mainBox = new Box(BoxLayout.X_AXIS);
-	//Box imageBox = new Box(BoxLayout.Y_AXIS);
+
 	private BufferedImage chosenb;
 	private ImageIcon chosenimage;
-	//int level=1;
 	private int count=1;	
-	//private int level=1;//to keep track of what screen we're on
-	//private int count=0; //to keep track of #ofclicks when user specifies the points
+
 	private JButton browse;
+	//private JButton click;
 	private JLabel label;
 	private JLabel message;
 	private RGB one;
@@ -38,7 +39,6 @@ public class GUI extends JFrame {
 	private RGB avgRGB;
 
 	
-
 	/** Constructor */
 	public GUI() {
 		super("ColorMatcher Game");
@@ -51,19 +51,57 @@ public class GUI extends JFrame {
 	
 	/** Add components of the GUI to mainBox */
 	private void addHomeSComponents(){
-		
+		//click = new JButton("click me");
+		//click.setBounds(10,10,10,10);
 		browse = new JButton("Browse an Image");
 		browse.setBounds(250,300,200,50);
+		
+		label=new JLabel();
+		//When the image is clicked, count increases, and an RGB is assigned to each pixel clicked
+		label.addMouseListener(new MouseAdapter(){
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				//count =1;
+				if (count==1){
+				
+					int x=e.getX();
+					int y=e.getY();
+					//System.out.println(chosenb.getRGB(x,y));
+					int col = chosenb.getRGB(x, y);
+					Color c = new Color(col,true);
+					one=new RGB(c);
+					//one=RGB.Colors(chosenb, e.getX(),e.getY());
+					count++;
+					message.setText("You're on click number " + count );
+				}
+				
+				else if (count ==2){
+					int x=e.getX();
+					int y=e.getY();
+					int col = chosenb.getRGB(x, y);
+					Color c = new Color(col,true);
+					two=new RGB(c);
+					count++;
+					message.setText("You're on click number " + count );
+				}
+				else if (count==3){
+					int x=e.getX();
+					int y=e.getY();
+					int col = chosenb.getRGB(x, y);
+					Color c = new Color(col,true);
+					three=new RGB(c);
+					avgRGB=new RGB(one,two,three);
+					JOptionPane.showMessageDialog(message, "The average color of your three clicks is: " + avgRGB);
+				}
+				
+			}
+		});
+		
 		message=new JLabel();
 		message.setText("You're on click number " + count );
 		message.setBounds(275,335,200,50);
-		label=new JLabel();
-		MouseHandler handler = new MouseHandler();
-		label.addMouseListener(handler);
-		//label.setSize(400,400);
-		add(message);
-		add(browse);
-		add(label);
+		
 		
 		browse.addActionListener(new ActionListener() {
 			/** allows user to choose an image once browse button is clicked */
@@ -89,81 +127,23 @@ public class GUI extends JFrame {
 					
 			}
 		});
-	
+		
+		add(message);
+		add(browse);
+		add(label);
+		//add(click);
 	}
 	
 	/**Show the chosen image as a BufferedImage
 	 * @throws IOException */
 	public ImageIcon showImage (String imagepath) throws IOException{
 		File file = new File(imagepath);
-		BufferedImage chosenb = ImageIO.read(file);
+		chosenb = ImageIO.read(file);
 		
 		chosenimage = new ImageIcon(chosenb);
 		return chosenimage;
 	} 
-	
-	/** When the image is clicked, count increases, and an RGB is assigned to each pixel clicked*/
-	private class MouseHandler implements MouseListener{
 
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-			if (count==1){
-				int x=e.getX();
-				int y=e.getY();
-				one=RGB.Colors(chosenb, x,y);
-				count++;
-			}
-			
-			else if (count ==2){
-				int x=e.getX();
-				int y=e.getY();
-				two=RGB.Colors(chosenb, x,y);
-				count++;
-			}
-			else if (count==3){
-				int x=e.getX();
-				int y=e.getY();
-				three=RGB.Colors(chosenb, x,y);
-				JOptionPane.showMessageDialog(message, "The average color of your three clicks is: " + avgRGB);
-			}
-			
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
-
-	
-	//public void addPointComponents(){
-	//JTextField jt=new JTextField("With your mouse click on 3 points in the image "
-		//	+ "that fall in the area with the color you want identify");
-	//add(jt);
-	//}
-	
 	
 	/** Show the GUI  */
 	public static void main(String[] pars) {
