@@ -15,28 +15,22 @@ public class RGB {
 	public RGB(int r, int g, int b){
 		red=r;
 		green=g;
-		blue=b;
-		
+		blue=b;	
 	}
 	
 	/** Finds red, green, and blue color values at a specific pixel */
 	public RGB(Color color){
-		
 		this.red=  color.getRed();
 		this.green = color.getGreen();
 		this.blue =  color.getBlue();
-
 	}
-	
 
 	
 	/**Calculates average red, green, and blue values */
-	public RGB(RGB first, RGB second, RGB third){
-		
+	public RGB(RGB first, RGB second, RGB third){	
 		this.red=(first.red + second.red + third.red)/3;
 		this.green=(first.green + second.green + third.green)/3;
 		this.blue=(first.blue + second.blue + third.blue)/3;
-
 	}
 	
 	//test
