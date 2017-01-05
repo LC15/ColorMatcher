@@ -18,6 +18,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.ColorUIResource;
 
 import game.RGB;
 
@@ -49,7 +50,7 @@ public class GUI extends JFrame {
 	}
 	
 	
-	/** Add components of the GUI to mainBox */
+	/** Add components of the GUI  */
 	private void addHomeSComponents(){
 		//click = new JButton("click me");
 		//click.setBounds(10,10,10,10);
@@ -91,7 +92,11 @@ public class GUI extends JFrame {
 					Color c = new Color(col,true);
 					three=new RGB(c);
 					avgRGB=new RGB(one,two,three);
+					UIManager UI = new UIManager();
+					UI.put("OptionPane.background",new ColorUIResource(avgRGB.getRed(), avgRGB.getGreen(), avgRGB.getBlue()));
+					UI.put("Panel.background",new ColorUIResource(avgRGB.getRed(), avgRGB.getGreen(), avgRGB.getBlue()));
 					JOptionPane.showMessageDialog(message, "The average color of your three clicks is: " + avgRGB);
+					
 				}
 				
 			}
@@ -101,13 +106,16 @@ public class GUI extends JFrame {
 		message.setText("You're on click number " + count );
 		message.setBounds(275,335,200,50);
 		
-		
+		/** allows user to choose an image once browse button is clicked */
 		browse.addActionListener(new ActionListener() {
-			/** allows user to choose an image once browse button is clicked */
+			
 			public void actionPerformed(ActionEvent e) {
+				//When a new image is chosen, the count goes back down to 1
+				count =1;
+				message.setText("You're on click number " + count );
 				JFileChooser file = new JFileChooser();
 				file.setCurrentDirectory(new File(System.getProperty("user.home")));
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images","jpg","gif","png");
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images","jpg","jpeg","gif","png");
 				file.addChoosableFileFilter(filter);
 				int result = file.showSaveDialog(null);
 				if (result ==JFileChooser.APPROVE_OPTION){
@@ -131,7 +139,7 @@ public class GUI extends JFrame {
 		//add(click);
 	}
 	
-	/**Show the chosen image as a BufferedImage
+	/**Show the chosen image as a BufferedImage so that getRGB() can be implemented on it 
 	 * @throws IOException */
 	public ImageIcon showImage (String imagepath) throws IOException{
 		File file = new File(imagepath);

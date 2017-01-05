@@ -33,17 +33,18 @@ public class RGB {
 		this.blue=(first.blue + second.blue + third.blue)/3;
 	}
 	
-	//test
-	/*
-	public static void main(String[] args){
-		RGB rgb1= new RGB(1,2,3);
-		RGB rgb2= new RGB(3,2,1);
-		RGB rgb3= new RGB(2,2,3);
-		RGB a = average(rgb1, rgb2,rgb3);
-		System.out.println(a.red);
-		
+	public int getRed(){
+		return red;
 	}
-*/
+	
+	public int getGreen(){
+		return green;
+	}
+	
+	public int getBlue(){
+		return blue;
+	}
+	
 	}
 
 
