@@ -105,7 +105,6 @@ public class GUI extends JFrame {
 		message=new JLabel();
 		message.setText("You're on click number " + count );
 		message.setBounds(275,335,200,50);
-		
 		/** allows user to choose an image once browse button is clicked */
 		browse.addActionListener(new ActionListener() {
 			
