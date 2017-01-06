@@ -95,7 +95,13 @@ public class GUI extends JFrame {
 					UIManager UI = new UIManager();
 					UI.put("OptionPane.background",new ColorUIResource(avgRGB.getRed(), avgRGB.getGreen(), avgRGB.getBlue()));
 					UI.put("Panel.background",new ColorUIResource(avgRGB.getRed(), avgRGB.getGreen(), avgRGB.getBlue()));
-					JOptionPane.showMessageDialog(message, "The average color of your three clicks is: " + avgRGB);
+					
+					RGBtoName RGBN = new RGBtoName();
+					String colorN ="Color Name Should Be Stored Here" 
+					colorN=RGBN.RGBtoN(avgRGB);
+					//IDK IF I DID THIS RIGHT
+					
+					JOptionPane.showMessageDialog(message, "The average color of your three clicks is: " + colorN);
 					
 				}
 				
