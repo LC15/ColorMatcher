@@ -37,7 +37,7 @@ public class RGBtoName {
 			e.printStackTrace();
 		}
 	
-	for (int i=0;i<554;i=i+4){
+	for (int i=0;i<2213;i=i+4){
 			colorNameAL.add(colorArrayL.get(i));
 			redAL.add(Integer.parseInt((colorArrayL.get(i+1)).trim()));
 			greenAL.add(Integer.parseInt((colorArrayL.get(i+2)).trim()));
@@ -47,7 +47,8 @@ public class RGBtoName {
 
 		 	int low = 0;
 	        int hi = redAL.size()-1;
-	        int mid=0;
+	        int mid= redAL.size()/2;
+	        int countWhile=0;
 	        //this while loop will enact a binary search to find a matching red value to RGB input
 	        while (low <= hi) { 
 	            
@@ -60,42 +61,41 @@ public class RGBtoName {
 	            	low = mid + 1;
 	            }
 	            else if(rgb.getRed()==redAL.get(mid)){break;}
+	            countWhile++;
 	        }
-	        
-	        
+	        System.out.println(countWhile + "number of while loops");
+	        System.out.println(colorArrayL.size()+"size of CAL "+ colorNameAL.size()+ "color name AL "+ redAL.size()+" red AL "+ greenAL.size()+ " green AL "+ blueAL.size()+ " blue AL" );
 	        System.out.println(low +" value of low after binary while loop");
 	        System.out.println(hi +" value of hi after binary while loop");
+	        System.out.println(mid+" mid ");
 	        System.out.println(rgb.getRed()+" RED " + rgb.getGreen()+ " GREEN " +rgb.getBlue()+ " BLUE ");
 	        
 	        int n=mid;
 	        int save =0;
 	        int diffg =0;
 	        int diffb=0;
-	        if(rgb.getRed()==redAL.get(mid) || Math.abs(rgb.getRed()-redAL.get(mid)) < 30 ){
-	        	while(rgb.getRed() == redAL.get(n)){
+	        
+	        while(Math.abs(rgb.getRed()- redAL.get(n))<30){
 	        		n=n-5;
-	        		
 	        	}
-	        	while((rgb.getGreen()!= greenAL.get(n) && rgb.getBlue() != blueAL.get(n))&& n<60){
+	        System.out.println(n+ " first while n");
+	       
+	        while((Math.abs(rgb.getGreen()-greenAL.get(n))>20) || (Math.abs(rgb.getBlue() - blueAL.get(n)) > 20) ){
 	        		n++;
-	        		if (Math.abs(rgb.getGreen()-greenAL.get(n))<30 && Math.abs(rgb.getBlue() - blueAL.get(n)) < 10 ){
-	        			save=n;
-	        			diffg=Math.abs(rgb.getGreen()-greenAL.get(n));
-	        			diffb=Math.abs(rgb.getBlue() - blueAL.get(n));
-	        		}
-	        		
+	        		save=n;
+	        			//diffg=Math.abs(rgb.getGreen()-greenAL.get(n));
+	        			//diffb=Math.abs(rgb.getBlue() - blueAL.get(n));	
 	        	}
 	        	
-	        }
-	        else{}
+	        
 	        //replace with a for
+	        System.out.println(n+ " final n");
+	        System.out.println(save+ " save ");
 		
-		if(rgb.getRed() == redAL.get(n) && rgb.getGreen()== greenAL.get(n) && rgb.getBlue() == blueAL.get(n)){
+		
+		
 			colorName = colorNameAL.get(n);
-		}
-		else{
-			colorName = colorNameAL.get(n);
-		}
+		
 		//add ArrayList to similar color if not on file
 		
 		return colorName;
