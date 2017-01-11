@@ -26,7 +26,7 @@ import game.RGB;
 /** Frame for the ColorMatcher game. */
 public class GUI extends JFrame {
 
-	private BufferedImage chosenb;
+	private BufferedImage chosenb=new BufferedImage(700,400, BufferedImage.TYPE_INT_RGB);
 	private ImageIcon chosenimage;
 	private int count=1;	
 
@@ -148,7 +148,7 @@ public class GUI extends JFrame {
 	public ImageIcon showImage (String imagepath) throws IOException{
 		File file = new File(imagepath);
 		chosenb = ImageIO.read(file);
-		chosenimage = new ImageIcon(chosenb);
+		chosenimage = new ImageIcon(chosenb.getScaledInstance(700, 400, Image.SCALE_DEFAULT));
 		return chosenimage;
 	} 
 
