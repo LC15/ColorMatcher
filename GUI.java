@@ -26,7 +26,7 @@ import game.RGB;
 /** Frame for the ColorMatcher game. */
 public class GUI extends JFrame {
 
-	private BufferedImage chosenb=new BufferedImage(700,400, BufferedImage.TYPE_INT_RGB);
+	private BufferedImage chosenb;//=new BufferedImage(700,400, BufferedImage.TYPE_INT_RGB);
 	private ImageIcon chosenimage;
 	private int count=1;	
 
@@ -47,7 +47,7 @@ public class GUI extends JFrame {
 		addHomeSComponents();
 		setSize(700,400);
 		setVisible(true);
-		
+		JOptionPane.showMessageDialog(message, "Instructions: \nClick Browse Image \nSelect the image you want to select \nUse your mouse to select 3 points on the image. The 3 points should be in the same area as the color you want identified\nWe will identify the color for you!");
 	}
 	
 	
@@ -148,7 +148,7 @@ public class GUI extends JFrame {
 	public ImageIcon showImage (String imagepath) throws IOException{
 		File file = new File(imagepath);
 		chosenb = ImageIO.read(file);
-		chosenimage = new ImageIcon(chosenb.getScaledInstance(700, 400, Image.SCALE_DEFAULT));
+		chosenimage = new ImageIcon(chosenb);//.getScaledInstance(700, 400, Image.SCALE_DEFAULT));
 		return chosenimage;
 	} 
 
